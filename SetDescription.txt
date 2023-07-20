@@ -1,0 +1,43 @@
+::::::::::::::::::set description on a particular user taking user input::::::::::::::::::::
+
+
+
+import java.io.*;
+import matrix.db.Context;
+import java.util.Scanner;
+import matrix.db.BusinessObject;
+import com.matrixone.apps.domain.DomainObject;
+
+
+public class Description_mxJPO {
+	
+		public  Description_mxJPO (Context context , String[] args){
+			
+		}
+	
+public int setattributevalue (Context context , String[] args)throws Exception{
+	try{
+		//String objectID= args[0];
+		
+		//System.out.println("objectID:"+objectID);
+		
+		DomainObject demo = new DomainObject("23644.53372.23191.18436");
+		
+		//demo.setAttributeValue(context ,"PLMEntity.V_description","This is physical product");
+		//System.out.println(str);
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter the description");
+		String description = sc.nextLine();
+		demo.setAttributeValue(context ,"PLMEntity.V_description",description);
+		System.out.println("Description added sucessfully");
+		 
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		
+	return 0;	
+	}
+}

@@ -1,0 +1,62 @@
+import java.io.*;
+import java.util.*;
+import matrix.db.Context;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.DomainConstants;
+import matrix.db.BusinessObject;
+import java.util.Map;
+import java.util.List;
+import matrix.util.StringList;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.framework.ui.UIUtil;
+
+public class PromoteActionInwork_mxJPO{
+	 
+	 public PromoteActionInwork_mxJPO (Context context ,String args[]) throws Exception{}
+
+
+public int promoteActionpolicy(Context context ,String args[]) throws Exception{
+	
+	String objectID = args[0];
+	
+	DomainObject obj  = new DomainObject(objectID);
+	
+	String strType = obj.getInfo(context,"type");
+	String strtype = obj.getInfo(context,"Title");
+	
+	String getAttribute = obj.getAttributeValue( context, "PLMEntity.V_description");
+	
+	String getAttribute1 = obj.getAttributeValue(context, "PLMEntity.V_Name");
+	
+	System.out.println("GetAttribute:"+getAttribute);
+	int ireturn =0;
+	//if(setAttribute==null){
+		 //obj.setAttributeValue( context, "PLMEntity.V_discipline]","This is PLMEntity.V_discipline")
+		//setAttributeValue(Context context, String name, String value)
+		
+		//if(setAttribute.isEmpty()){
+			if(strType.equalsIgnoreCase("VPMReference"))
+			{
+				
+			if(UIUtil.isNullOrEmpty(getAttribute)) {
+				//if(setAttribute.isEmpty()){
+					//emxContextUtil_mxJPO.mqlNotice(context," Description field is empty..");
+					//obj.setAttributeValue( context, "PLMEntity.V_description","This is PLMEntity.V_description");
+					obj.setAttributeValue( context, "PLMEntity.V_description",getAttribute1);
+					emxContextUtil_mxJPO.mqlNotice(context," Description added Sucessfully..");
+
+			
+			//ireturn =1;
+		}
+		
+			}
+			return ireturn;
+	}
+	
+	
+}
+//mod policy "VPLM_SMB_Definition_MajorRev" state IN_WORK add trigger  Promote action  emxTriggerManager input "PolicyVPLM_SMB_Definition_MajorRevpromoteAction ENO3DNotification";
+
+//add bus "eService Trigger Program Parameters" "PolicyVPLM_SMB_Definition_MajorRevpromoteAction" "promoteActionsetAttributeFill" vault "eService Administration" 
+policy "eService Trigger Program Policy" "eService Program Name" "PromoteActionInwork" "eService Method Name" "promoteActionpolicy"  "eService Error Type" "Error" 
+"eService Run In Background" "FALSE" "eService Program Argument 1" "${OBJECTID}"'eService Sequence Number' 1;

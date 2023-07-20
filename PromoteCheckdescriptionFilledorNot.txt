@@ -1,0 +1,56 @@
+import java.io.*;
+import java.util.*;
+import matrix.db.Context;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.DomainConstants;
+import matrix.db.BusinessObject;
+import java.util.Map;
+import java.util.List;
+import matrix.util.StringList;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.framework.ui.UIUtil;
+
+public class PromoteState_mxJPO {
+	 
+	 public PromoteState_mxJPO(Context context ,String args[]) throws Exception{}
+
+
+public int promoteStatepolicy(Context context ,String args[]) throws Exception{
+	
+	String objectID = args[0];
+	
+	DomainObject obj  = new DomainObject(objectID);
+	
+	String strType = obj.getInfo(context,"type");
+	
+	String setAttribute = obj.getAttributeValue( context, "PLMEntity.V_description");
+	
+	System.out.println("setAttribute:"+setAttribute);
+	int ireturn =0;
+	//if(setAttribute==null){
+		 //obj.setAttributeValue( context, "PLMEntity.V_discipline]","This is PLMEntity.V_discipline")
+		//setAttributeValue(Context context, String name, String value)
+		
+		//if(setAttribute.isEmpty()){
+			if(strType.equalsIgnoreCase("VPMReference"))
+			{
+				
+			if(UIUtil.isNullOrEmpty(setAttribute)) {
+				//if(setAttribute.isEmpty()){
+			mxContextUtil_mxJPO.mqlNotice(context,"Need to fill description ");
+			ireturn =1;
+		}
+		
+			}
+			return ireturn;
+	}
+	
+	
+}
+
+
+mod policy "VPLM_SMB_Definition_MajorRev" state IN_WORK add trigger  Promote check emxTriggerManager input "PolicyVPLM_SMB_Definition_MajorRevpromoteCheck PolicyVTCStateAllproomoteCheck ECMObjectStateTransitionCheck VPLMIntegSyncObjectOnReleaseTrigger";
+
+add bus "eService Trigger Program Parameters" "PolicyVPLM_SMB_Definition_MajorRevpromoteCheck" "promotecheckIfAttributeFillorNot" vault "eService Administration" 
+policy "eService Trigger Program Policy" "eService Program Name" "PromoteState" "eService Method Name" "promoteStatepolicy"  "eService Error Type" "Error"
+"eService Run In Background" "FALSE" "eService Program Argument 1" "${OBJECTID}"'eService Sequence Number' 1;

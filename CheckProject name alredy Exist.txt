@@ -1,0 +1,58 @@
+import java.util.Map;
+import java.util.List;
+import matrix.util.StringList;
+import com.matrixone.apps.domain.util.MapList;
+
+public class practiceonTrigger_mxJPO{
+	
+public practiceonTrigger_mxJPO(Context context,String[] args)throws Exception{
+}
+
+public int checkProjectName(Context context,String args[]) throws Exception {
+	
+String strProjectName = args[0];
+int iReturn = 0;
+
+//System.out.println("::::strProjectName::::"+strProjectName); 
+ 
+//  findObjects(Context context, String typePattern, String vaultPattern, String whereExpression, StringList objectSelects) 
+
+MapList ml = DomainObject.findObjects( context, "Project Space","*", "name == '"+strProjectName+"'", new StringList());
+if(ml.size() > 0)
+{
+emxContextUtil_mxJPO.mqlNotice(context,"This name is already Exists");
+iReturn = 1;
+
+}
+
+return iReturn;
+}
+}
+
+1) Trigger addtion : mod type "Project Space" add trigger create check emxTriggerManager input "TypeProjectSpaceCreateCheck";
+  
+  mod policy "VPLM_SMB_Definition_MajorRev" add state
+ **************************************
+
+2)Trigget object creation
+
+
+add bus "eService Trigger Program Parameters" "TypeProjectSpaceCreateCheck" "checkIfNameExists" vault "eService Administration" policy "eService Trigger Program Policy" "eService Program Name" "practiceonTrigger" "eService Method Name" "checkProjectName"  "eService Error Type" "Error" "eService Run In Background" "FALSE" "eService Program Argument 1" "${Name}" 'eService Sequence Number' 1 current Active;
+
+BusinessObject eService Trigger Program Parameters TypeProjectSpaceCreateCheck checkIfNameExists successfully added
+
+*******************************************************************
+5) Program creation as per requirement.
+
+    insert pro
+    compile prog
+    
+***************************************
+6) Reload Cache from UI
+ 
+****************************
+7) Check & try 
+********************
+8) Log Checking 
+
+C:\DassaultSystemes\R2023x\3DSpace\win_b64\code\tomee\logs

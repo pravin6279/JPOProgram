@@ -1,0 +1,106 @@
+import java.io.*;
+import java.util.*;
+import matrix.db.Context;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.DomainConstants;
+import matrix.db.BusinessObject;
+import java.util.Map;
+import java.util.List;
+import matrix.util.StringList;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.framework.ui.UIUtil;
+
+public class SetActualDateProjectSpace_mxJPO{
+
+public  SetActualDateProjectSpace_mxJPO	(Context context ,String [] args)throws Exception{
+	}
+
+public int setActualPRojectDate(Context context ,String [] args)throws Exception{
+	System.out.println("args[0] :"+args[0]+"::::::args[1]::::"+args[1] );
+	String OBJECTID = args[0];
+	DomainObject demo  =  new DomainObject(OBJECTID);
+	
+	String gettype =demo.getInfo(context,"type");
+	
+	String getEstimateDate = demo.getAttributeValue( context, "Task Estimated Start Date");
+	//System.out.println("Task Estimated Start Date :"+getEstimateDate );
+	
+	String getActualDate = demo.getAttributeValue(context ,"Task Actual Start Date");
+	//System.out.println("Task Actual Start Date"+getActualDate );
+	
+	if(gettype.equalsIgnoreCase("Project Space")){
+		
+		if(UIUtil.isNullOrEmpty(getActualDate)){
+		
+		demo.setAttributeValue(context,"Task Actual Start Date",getEstimateDate);
+		//System.out.println("Sucessfully added");
+		emxContextUtil_mxJPO.mqlNotice(context,"Date added Sucessfully..");
+		
+	}   
+	}
+	return 0;
+}
+}
+
+//mod type "Project Space"  add trigger  modifyattribute action  emxTriggerManager input "ModifyAttributeValueOfTypeProjectSpace";
+
+//add bus "eService Trigger Program Parameters" "ModifyAttributeValueOfTypeProjectSpace" "ModifyActionsetAttributeSet" vault "eService Administration"
+ policy "eService Trigger Program Policy" 
+"eService Program Name" "SetActualDateProjectSpace" "eService Method Name" "setActualPRojectDate"  "eService Error Type" "Error" 
+"eService Run In Background" "FALSE" "eService Program Argument 1" "${OBJECTID}" "eService Program Argument 2" "${ATTRVALUE}" 
+"eService Program Argument 3" "${ATTRNAME}" 'eService Sequence Number' 1;
+
+
+
+//mod bus 11030.29065.50498.3847 "Task Estimated Start Date" "6/20/2023 10:00:00 AM";
+//args[0] :11030.29065.50498.3847::::::args[1]::::6/20/2023 10:00:00 AM
+//BusinessObject Project Space Solize_Implementation 131686218553389 successfully modified
+
+
+MQL<39>print bus 11030.29065.50498.3847 select attribute.value;
+business object  Project Space Solize_Implementation 131686218553389
+    attribute[Originator].value = admin_platform
+    attribute[Title].value =
+    attribute[Notes].value =
+    attribute[Constraint Date].value =
+    attribute[Percent Complete].value = 0.0
+    attribute[Schedule Duration Units].value =
+    attribute[Task Actual Duration].value = 0.0
+    attribute[Task Actual Finish Date].value =
+    attribute[Task Actual Start Date].value = 6/20/2023 10:00:00 AM
+    attribute[Task Estimated Duration].value = 0.0
+    attribute[Task Estimated Finish Date].value = 6/8/2023 8:00:00 AM
+    attribute[Task Estimated Start Date].value = 6/20/2023 10:00:00 AM
+    attribute[Task Constraint Date].value = 6/8/2023 8:00:00 AM
+    attribute[Source Id].value = 291CA0D3000007486481A73A00000134
+    attribute[File Store Symbolic Name].value =
+    attribute[Project Visibility].value = Members
+    attribute[Resource Plan Preference].value = Timeline
+    attribute[Previous Project State].value =
+    attribute[Schedule Based On].value = Estimated
+    attribute[Approver Selection].value = Resource Manager
+    attribute[Effort Submission].value = Task
+    attribute[Task Assignment Reminder Duration].value = 0
+    attribute[Task Assignment Reminder Recurrence Interval].value = 0
+    attribute[Enable Approval].value = FALSE
+    attribute[Schedule].value = Auto
+    attribute[Favorite Tab].value =
+    attribute[Favorite Category].value =
+    attribute[ProjectUserPreference].value =
+    attribute[Percent Complete Based On].value = Duration
+    attribute[Lag Calendar].value = Successor Task Calendar
+    attribute[Forecast Calculated On].value =
+    attribute[Currency].value = AED-UAE Dirham-UNITED ARAB EMIRATES (THE)
+    attribute[Baseline Current End Date].value =
+    attribute[Baseline Current Start Date].value =
+    attribute[Baseline Initial End Date].value =
+    attribute[Baseline Initial Start Date].value =
+    attribute[Escalation Date].value =
+    attribute[Recurrence Interval].value = 0
+    attribute[Send Reminder].value = 0
+    attribute[Color].value =
+    attribute[Task Approval].value = FALSE
+    attribute[Effort Notifications].value = FALSE
+    attribute[Schedule From].value = Project Start Date
+    attribute[Estimated Duration Keyword Values].value =
+    attribute[Default Constraint Type].value = As Soon As Possible
